@@ -37,14 +37,14 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-200 font-sans selection:bg-white selection:text-black">
       {/* HEADER */}
-      <header className="border-b border-zinc-800/50 p-6 flex justify-between items-center bg-zinc-950/80 backdrop-blur sticky top-0 z-10">
+      <header className="border-b border-zinc-800/50 p-4 md:p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-zinc-950/80 backdrop-blur sticky top-0 z-10 w-full">
         <div className="flex items-center gap-3">
           <Brain className="text-white" size={24} />
           <span className="font-semibold tracking-wide">IdentityOS</span>
         </div>
-        <div className="flex items-center gap-6">
-          <div className="text-right">
-            <div className="text-xs text-zinc-500 uppercase tracking-widest">Уровень Эго</div>
+        <div className="flex items-center justify-between w-full md:w-auto md:justify-end gap-4 md:gap-6">
+          <div className="text-left md:text-right">
+            <div className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest">Уровень Эго</div>
             <div className="text-sm font-medium">{EGO_TITLES[profile.egoLevel]}</div>
           </div>
           <div className="w-32 h-2 bg-zinc-900 rounded-full overflow-hidden">
@@ -56,7 +56,7 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto p-6 mt-8">
+      <main className="max-w-5xl mx-auto p-4 md:p-6 mt-4 md:mt-8">
         <LensToggle />
 
         {/* LENS CONTENT */}

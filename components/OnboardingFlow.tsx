@@ -83,7 +83,7 @@ export default function OnboardingFlow() {
   const current = steps[step];
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-6 font-sans overflow-hidden">
+    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 md:p-6 font-sans overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
           key={step}
@@ -94,7 +94,7 @@ export default function OnboardingFlow() {
           className="w-full max-w-xl"
         >
 
-          <div className="mb-12 flex items-center justify-between text-xs text-zinc-600 uppercase tracking-widest font-mono">
+          <div className="mb-8 md:mb-12 flex flex-col md:flex-row items-start md:items-center justify-between text-[10px] md:text-xs text-zinc-600 uppercase tracking-widest font-mono gap-2 md:gap-0">
             <span>{step === 0 ? 'Инициализация' : `Раскопки ${step}/${steps.length - 1}`}</span>
             {step > 0 && <span>Уровень угрозы Эго: Высокий</span>}
           </div>
@@ -110,9 +110,9 @@ export default function OnboardingFlow() {
                 onChange={(e) => setData({ ...data, [current.field as keyof typeof data]: e.target.value })}
                 onKeyDown={handleKeyDown}
                 placeholder={current.placeholder}
-                className="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg p-6 text-xl focus:outline-none focus:border-white focus:bg-zinc-900 transition-all resize-none min-h-[150px] placeholder:text-zinc-700"
+                className="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg p-4 md:p-6 text-lg md:text-xl focus:outline-none focus:border-white focus:bg-zinc-900 transition-all resize-none min-h-[120px] md:min-h-[150px] placeholder:text-zinc-700"
               />
-              <div className="flex justify-between items-center text-sm text-zinc-500">
+              <div className="flex justify-between items-center text-xs md:text-sm text-zinc-500">
                 <span>Будьте предельно честны.</span>
                 <span>Ctrl + Enter</span>
               </div>
@@ -121,11 +121,11 @@ export default function OnboardingFlow() {
             <div className="h-24"></div>
           )}
 
-          <div className="mt-12 flex justify-end">
+          <div className="mt-8 md:mt-12 flex justify-end">
             <button
               onClick={handleNext}
               disabled={current.field ? !data[current.field as keyof typeof data].trim() : false}
-              className="flex items-center gap-2 px-8 py-4 bg-white text-black font-semibold rounded hover:bg-zinc-200 transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+              className="w-full md:w-auto flex justify-center items-center gap-2 px-6 md:px-8 py-3 md:py-4 bg-white text-black font-semibold rounded hover:bg-zinc-200 transition-all disabled:opacity-20 disabled:cursor-not-allowed"
             >
               {step === steps.length - 1 ? 'Сгенерировать Идентичность' : 'Продолжить'}
               <ChevronRight size={20} />

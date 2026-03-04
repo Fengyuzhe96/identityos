@@ -28,15 +28,15 @@ export default function QuestList({ onCompleteTask }: QuestListProps) {
   const setAppState = useIdentityStore((state) => state.setAppState);
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className="flex justify-between items-end mb-8">
+    <div className="max-w-2xl mx-auto w-full">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 sm:gap-4 mb-6 md:mb-8">
         <div>
-          <h2 className="text-3xl font-light text-white mb-2">Ежедневные Квесты</h2>
-          <p className="text-zinc-500">Выполнение рычагов — единственный способ прокачки.</p>
+          <h2 className="text-2xl md:text-3xl font-light text-white mb-1 md:mb-2">Ежедневные Квесты</h2>
+          <p className="text-sm md:text-base text-zinc-500">Выполнение рычагов — единственный способ прокачки.</p>
         </div>
         <button
           onClick={() => setAppState('forcefield')}
-          className="flex items-center gap-2 text-sm bg-white text-black px-4 py-2 rounded font-medium hover:bg-zinc-200 transition-colors"
+          className="flex items-center justify-center sm:justify-start gap-2 text-sm bg-white text-black w-full sm:w-auto px-4 py-3 sm:py-2 rounded font-medium hover:bg-zinc-200 transition-colors"
         >
           <Zap size={16} />
           Forcefield Mode
@@ -56,14 +56,14 @@ export default function QuestList({ onCompleteTask }: QuestListProps) {
               layout
               variants={itemVariant}
               onClick={() => !lever.completed && onCompleteTask(lever)}
-              className={`group p-5 rounded-lg border flex items-center gap-4 cursor-pointer transition-all duration-300
+              className={`group p-4 md:p-5 rounded-lg border flex items-start sm:items-center gap-3 sm:gap-4 cursor-pointer transition-all duration-300
                 ${lever.completed ? 'bg-zinc-900/50 border-zinc-800 opacity-60' : 'bg-zinc-900 border-zinc-700 hover:border-zinc-500'}`}
             >
-              <div className="text-zinc-400 group-hover:text-white transition-colors">
+              <div className="text-zinc-400 group-hover:text-white transition-colors shrink-0 mt-0.5 sm:mt-0">
                 {lever.completed ? <CheckCircle2 className="text-white" size={24} /> : <Circle size={24} />}
               </div>
-              <div className="flex-1">
-                <p className={`text-lg transition-all ${lever.completed ? 'line-through text-zinc-500' : 'text-zinc-200'}`}>
+              <div className="flex-1 min-w-0">
+                <p className={`text-base md:text-lg transition-all break-words ${lever.completed ? 'line-through text-zinc-500' : 'text-zinc-200'}`}>
                   {lever.text}
                 </p>
               </div>

@@ -17,12 +17,12 @@ export default function Forcefield({ onTaskComplete }: ForcefieldProps) {
   const activeTask = uncompletedTasks.length > 0 ? uncompletedTasks[0] : null;
 
   return (
-    <div className="min-h-screen bg-black text-zinc-100 flex flex-col items-center justify-center p-6 relative font-sans">
+    <div className="min-h-screen bg-black text-zinc-100 flex flex-col items-center justify-center p-4 md:p-6 relative font-sans">
       <button
         onClick={() => setAppState('dashboard')}
-        className="absolute top-8 right-8 text-zinc-500 hover:text-white transition-colors"
+        className="absolute top-4 right-4 md:top-8 md:right-8 text-zinc-500 hover:text-white transition-colors"
       >
-        <X size={32} />
+        <X size={28} className="md:w-8 md:h-8" />
       </button>
 
       <div className="max-w-2xl text-center space-y-12">

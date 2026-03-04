@@ -49,13 +49,13 @@ export default function PatternBreaker() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 30, scale: 0.9 }}
           transition={{ type: "spring", stiffness: 400, damping: 25 }}
-          className="fixed bottom-8 right-8 bg-white text-black p-6 rounded shadow-2xl z-50 max-w-sm"
+          className="fixed bottom-4 left-4 right-4 md:bottom-8 md:left-auto md:right-8 bg-white text-black p-4 md:p-6 rounded shadow-2xl z-50 max-w-[calc(100%-2rem)] md:max-w-sm"
         >
-          <div className="flex gap-4 items-start">
-            <AlertTriangle className="text-red-600 shrink-0 mt-1" size={24} />
+          <div className="flex gap-3 md:gap-4 items-start">
+            <AlertTriangle className="text-red-600 shrink-0 mt-0.5 md:mt-1" size={20} />
             <div>
-              <h4 className="font-bold uppercase tracking-widest text-xs mb-2 text-red-600">Системное прерывание</h4>
-              <p className="text-lg font-medium leading-snug">{msg}</p>
+              <h4 className="font-bold uppercase tracking-widest text-[10px] md:text-xs mb-1 md:mb-2 text-red-600">Системное прерывание</h4>
+              <p className="text-base md:text-lg font-medium leading-snug">{msg}</p>
             </div>
           </div>
         </motion.div>
