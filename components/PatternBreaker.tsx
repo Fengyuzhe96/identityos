@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { AlertTriangle } from 'lucide-react';
 import { useIdentityStore } from '@/store/useIdentityStore';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const PATTERN_BREAKER_QUESTIONS = [
   "Что ты сейчас избегаешь?",
@@ -18,12 +19,12 @@ export default function PatternBreaker() {
 
   useEffect(() => {
     if (appState !== 'dashboard') return;
-    
+
     const interval = setInterval(() => {
       if (Math.random() > 0.5) {
         trigger();
       }
-    }, 30000); 
+    }, 30000);
 
     return () => clearInterval(interval);
   }, [appState]);
@@ -40,17 +41,25 @@ export default function PatternBreaker() {
     return () => { delete (window as any).triggerPatternBreaker; };
   }, []);
 
-  if (!msg) return null;
-
   return (
-    <div className="fixed bottom-8 right-8 bg-white text-black p-6 rounded shadow-2xl z-50 max-w-sm animate-in slide-in-from-bottom-5">
-      <div className="flex gap-4 items-start">
-        <AlertTriangle className="text-red-600 shrink-0 mt-1" size={24} />
-        <div>
-          <h4 className="font-bold uppercase tracking-widest text-xs mb-2 text-red-600">Системное прерывание</h4>
-          <p className="text-lg font-medium leading-snug">{msg}</p>
-        </div>
-      </div>
-    </div>
+    <AnimatePresence>
+      {msg && (
+        <motion.div
+          initial={{ opacity: 0, y: 50, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 30, scale: 0.9 }}
+          transition={{ type: "spring", stiffness: 400, damping: 25 }}
+          className="fixed bottom-8 right-8 bg-white text-black p-6 rounded shadow-2xl z-50 max-w-sm"
+        >
+          <div className="flex gap-4 items-start">
+            <AlertTriangle className="text-red-600 shrink-0 mt-1" size={24} />
+            <div>
+              <h4 className="font-bold uppercase tracking-widest text-xs mb-2 text-red-600">Системное прерывание</h4>
+              <p className="text-lg font-medium leading-snug">{msg}</p>
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
