@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Brain, Eye, ShieldAlert, Target, Activity } from 'lucide-react';
+import { Brain, Eye, ShieldAlert, Target, Activity, LogOut, BarChart3 } from 'lucide-react';
 import { useIdentityStore, EgoLevel } from '@/store/useIdentityStore';
+import { useAuth } from './AuthProvider';
 import LensToggle from './LensToggle';
 import QuestList from './QuestList';
 import CyberneticFeedback from './CyberneticFeedback';
 import PatternBreaker from './PatternBreaker';
+import StateDiary from './StateDiary';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 const EGO_TITLES: Record<EgoLevel, string> = {
@@ -32,7 +34,9 @@ const itemVariant: Variants = {
 
 export default function Dashboard() {
   const profile = useIdentityStore();
+  const { signOut } = useAuth();
   const [feedbackTask, setFeedbackTask] = useState<any>(null);
+  const [showDiary, setShowDiary] = useState(false);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-200 font-sans selection:bg-white selection:text-black">
@@ -53,6 +57,20 @@ export default function Dashboard() {
               style={{ width: `${(profile.xp % 50) / 50 * 100}%` }}
             />
           </div>
+          <button
+            onClick={() => setShowDiary(true)}
+            className="p-2 text-zinc-600 hover:text-zinc-300 transition-colors"
+            title="Дневник состояний"
+          >
+            <BarChart3 size={18} />
+          </button>
+          <button
+            onClick={signOut}
+            className="p-2 text-zinc-600 hover:text-red-400 transition-colors"
+            title="Выйти"
+          >
+            <LogOut size={18} />
+          </button>
         </div>
       </header>
 
@@ -135,6 +153,11 @@ export default function Dashboard() {
             task={feedbackTask}
             onClose={() => setFeedbackTask(null)}
           />
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {showDiary && (
+          <StateDiary onClose={() => setShowDiary(false)} />
         )}
       </AnimatePresence>
       <PatternBreaker />

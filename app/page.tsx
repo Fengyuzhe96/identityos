@@ -2,24 +2,59 @@
 
 import React, { useEffect, useState } from 'react';
 import { useIdentityStore } from '@/store/useIdentityStore';
+import { useAuth } from '@/components/AuthProvider';
 import OnboardingFlow from '@/components/OnboardingFlow';
 import Dashboard from '@/components/Dashboard';
 import Forcefield from '@/components/Forcefield';
 import CyberneticFeedback from '@/components/CyberneticFeedback';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Loader2 } from 'lucide-react';
 
 export default function Home() {
+  const { user, loading: authLoading } = useAuth();
   const appState = useIdentityStore((state) => state.appState);
+  const loadFromSupabase = useIdentityStore((state) => state.loadFromSupabase);
+  const migrateLocalStorageToSupabase = useIdentityStore((state) => state.migrateLocalStorageToSupabase);
+  const isSyncing = useIdentityStore((state) => state.isSyncing);
   const [isHydrated, setIsHydrated] = useState(false);
   const [feedbackTask, setFeedbackTask] = useState<any>(null);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   // Handle hydration to prevent mismatch between server and client
   useEffect(() => {
     setIsHydrated(true);
   }, []);
 
-  if (!isHydrated) {
-    return <div className="min-h-screen bg-black" />;
+  // Load data from Supabase when user is authenticated
+  useEffect(() => {
+    if (user && isHydrated && !dataLoaded) {
+      (async () => {
+        // Try to migrate localStorage data first
+        const migrated = await migrateLocalStorageToSupabase(user.id);
+        if (!migrated) {
+          // If no migration needed, load from Supabase
+          await loadFromSupabase(user.id);
+        }
+        setDataLoaded(true);
+      })();
+    }
+  }, [user, isHydrated, dataLoaded]);
+
+  if (!isHydrated || authLoading || (user && !dataLoaded)) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="flex flex-col items-center gap-4"
+        >
+          <Loader2 className="text-zinc-600 animate-spin" size={32} />
+          <span className="text-zinc-700 text-sm uppercase tracking-widest">
+            {isSyncing ? 'Синхронизация...' : 'Загрузка системы...'}
+          </span>
+        </motion.div>
+      </div>
+    );
   }
 
   return (

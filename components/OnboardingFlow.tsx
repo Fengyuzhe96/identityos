@@ -63,12 +63,7 @@ export default function OnboardingFlow() {
 
   const handleNext = () => {
     if (step === steps.length - 1) {
-      const leversArray = data.leversInput
-        .split(',')
-        .map((l, i) => ({ id: i, text: l.trim(), completed: false, feeling: null }))
-        .filter(l => l.text !== '');
-
-      triggerOnboardingComplete({ ...data, dailyLevers: leversArray });
+      triggerOnboardingComplete(data);
     } else {
       setStep(s => s + 1);
     }
